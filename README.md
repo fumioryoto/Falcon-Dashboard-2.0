@@ -41,37 +41,54 @@ npm install -g serve
 serve -s build
 ```
 
-**Windows: Run at Startup (two options)**
+**Windows: Run at Startup (included .bat files)**
 
-- Option A — Run dev server at login
-  1. Create a `.bat` file (example below) and update the path to your project root.
-  2. Place a shortcut to the `.bat` in your Startup folder: `%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup`.
+Two startup scripts are provided in the repo root:
 
-Example `start-dev.bat`:
+1. **`start-dev.bat`** — Run dev server at login
+   - Starts the development server with hot reload.
+   - Opens browser at `http://localhost:3000`.
+   - Usage: Create a shortcut and place it in `%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup`.
 
-```bat
-@echo off
-cd /d "D:\path\to\your\project"
-start /min cmd /c "npm start"
-exit
+   Contents:
+
+   ```bat
+   @echo off
+   cd /d "D:\codes"
+   start "" http://localhost:3000
+   start /min cmd /c "npm start"
+   exit
+   ```
+
+2. **`start-serve.bat`** — Serve production build at login
+   - First run `npm run build` to generate the production bundle.
+   - Install serve globally: `npm i -g serve`.
+   - Starts the static production server.
+   - Opens browser at `http://localhost:3000`.
+   - Usage: Create a shortcut and place it in `%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup`.
+
+   Contents:
+
+   ```bat
+   @echo off
+   cd /d "D:\codes"
+   start /min cmd /c "serve -s build --listen 3000"
+   start "" http://localhost:3000
+   exit
+   ```
+
+**Quick Setup for Auto-Start:**
+
+```powershell
+# To run at login, create shortcuts to either .bat file and place them in:
+# %APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup
+# Or use this PowerShell command to create a shortcut automatically (replace USERNAME):
+
+$shortcut = New-Object -ComObject WScript.Shell
+$link = $shortcut.CreateShortCut("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\Falcon-Dashboard.lnk")
+$link.TargetPath = "D:\codes\start-dev.bat"
+$link.Save()
 ```
-
-- Option B — Serve production build at login
-  1. Run `npm run build` once to create `build/`.
-  2. Install `serve` globally: `npm i -g serve`.
-  3. Create a `start-serve.bat` pointing to `serve -s build` and add a shortcut to the Startup folder.
-
-Example `start-serve.bat`:
-
-```bat
-@echo off
-cd /d "D:\path\to\your\project"
-start /min cmd /c "serve -s build --listen 3000"
-start "" http://localhost:3000
-exit
-```
-
-Note: The included `to-do.bat` is an example that launches `npm start` and opens the browser — update its path before using.
 
 **Key files / components**
 
