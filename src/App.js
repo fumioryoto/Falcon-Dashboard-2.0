@@ -423,6 +423,14 @@ export default function TodoDashboard() {
             </button>
 
             <button
+              onClick={() => window.open('https://www.facebook.com/', '_blank')}
+              className="px-3 py-2 rounded bg-slate-700 text-gray-200 hover:bg-slate-600 toolbar-btn"
+              title="Open Facebook"
+            >
+              📘 Facebook
+            </button>
+
+            <button
               onClick={handleExportJSON}
               className="px-3 py-2 rounded bg-green-700 text-white hover:bg-green-600 toolbar-btn"
               title="Download app data as JSON"
@@ -741,6 +749,14 @@ export default function TodoDashboard() {
                         title="Open Discord Web"
                       >
                         👾 Discord
+                      </button>
+
+                      <button
+                        onClick={() => window.open('https://www.facebook.com/', '_blank')}
+                        className="text-sm px-2 py-1 rounded bg-slate-700 text-gray-200 hover:bg-slate-600 toolbar-btn-sm"
+                        title="Open Facebook"
+                      >
+                        📘 Facebook
                       </button>
 
                       {todo.driveLink && todo.driveLink.length > 0 && (
