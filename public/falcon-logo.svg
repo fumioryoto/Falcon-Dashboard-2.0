@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="Falcon logo">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Transparent background intentionally left out -->
+  <!-- Stylized falcon head -->
+  <g transform="translate(10,10) scale(0.8)">
+    <path d="M46 6 C30 6 14 18 10 30 C8 36 10 44 16 48 C22 52 30 50 34 46 C38 42 44 44 52 44 C62 44 72 40 80 34 C86 30 90 22 88 16 C82 12 68 8 46 6 Z"
+          fill="url(#g1)"/>
+
+    <!-- Beak -->
+    <path d="M80 34 C86 36 92 40 94 44 C96 48 94 52 90 54 C84 56 76 50 70 46 Z"
+          fill="url(#g2)"/>
+
+    <!-- Eye -->
+    <circle cx="56" cy="26" r="4" fill="#0b1220" opacity="0.95" />
+
+    <!-- Accent stroke -->
+    <path d="M18 30 C24 28 34 26 46 26 C60 26 70 30 78 36"
+          fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>
