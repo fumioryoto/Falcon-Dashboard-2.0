@@ -54,7 +54,7 @@ Two startup scripts are provided in the repo root:
 
    ```bat
    @echo off
-   cd /d "D:\codes"
+   cd /d "D:\Falcon-Dashboard-2.0"
    start "" http://localhost:3000
    start /min cmd /c "npm start"
    exit
@@ -71,7 +71,7 @@ Two startup scripts are provided in the repo root:
 
    ```bat
    @echo off
-   cd /d "D:\codes"
+   cd /d "D:\Falcon-Dashboard-2.0"
    start /min cmd /c "serve -s build --listen 3000"
    start "" http://localhost:3000
    exit
