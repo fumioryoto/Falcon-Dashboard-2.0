@@ -90,6 +90,226 @@ $link.TargetPath = "D:\codes\start-dev.bat"
 $link.Save()
 ```
 
+---
+
+## **macOS: Setup & Run Guide**
+
+### **Prerequisites (macOS)**
+
+Before running the Falcon Dashboard on Mac, ensure you have the following installed:
+
+1. **Xcode Command Line Tools** — Required for compiling native modules
+
+   ```bash
+   xcode-select --install
+   ```
+
+2. **Homebrew** (optional but recommended) — Package manager for Mac
+
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+
+3. **Node.js & npm** — Install via Homebrew or from [nodejs.org](https://nodejs.org)
+
+   ```bash
+   # Using Homebrew
+   brew install node
+
+   # Or download from nodejs.org (16+ recommended)
+   ```
+
+   Verify installation:
+
+   ```bash
+   node --version
+   npm --version
+   ```
+
+### **Installation (macOS)**
+
+1. Navigate to your project directory:
+
+   ```bash
+   cd /path/to/falcon-dashboard
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### **Run (Development Mode)**
+
+Start the development server with hot reload:
+
+```bash
+npm start
+```
+
+The app will open automatically at `http://localhost:3000`.
+
+**Or use the provided shell script:**
+
+Create `start-dev.sh` in the project root:
+
+```bash
+#!/bin/bash
+cd "$(dirname "$0")"
+open http://localhost:3000
+npm start
+```
+
+Make it executable and run:
+
+```bash
+chmod +x start-dev.sh
+./start-dev.sh
+```
+
+### **Build (Production)**
+
+Create an optimized production build:
+
+```bash
+npm run build
+```
+
+Output is in the `build/` folder.
+
+**Serve the production build locally:**
+
+```bash
+# Install serve globally (one-time only)
+npm install -g serve
+
+# Serve the build
+serve -s build
+
+# Or specify a custom port
+serve -s build -p 3000
+```
+
+**Or use the provided shell script:**
+
+Create `start-serve.sh` in the project root:
+
+```bash
+#!/bin/bash
+cd "$(dirname "$0")"
+serve -s build --listen 3000 &
+sleep 2
+open http://localhost:3000
+```
+
+Make it executable and run:
+
+```bash
+chmod +x start-serve.sh
+./start-serve.sh
+```
+
+### **Run at Startup (macOS)**
+
+To automatically run the Falcon Dashboard when you log in, use **LaunchAgent**:
+
+**Option 1: Development mode at startup**
+
+1. Create a LaunchAgent plist file:
+
+   ```bash
+   nano ~/Library/LaunchAgents/com.falcon-dashboard.dev.plist
+   ```
+
+2. Paste this content (replace `/path/to` with your actual project path):
+
+   ```xml
+   <?xml version="1.0" encoding="UTF-8"?>
+   <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+   <plist version="1.0">
+   <dict>
+       <key>Label</key>
+       <string>com.falcon-dashboard.dev</string>
+       <key>ProgramArguments</key>
+       <array>
+           <string>/bin/bash</string>
+           <string>/path/to/falcon-dashboard/start-dev.sh</string>
+       </array>
+       <key>RunAtLoad</key>
+       <true/>
+       <key>StandardOutPath</key>
+       <string>/tmp/falcon-dev.log</string>
+       <key>StandardErrorPath</key>
+       <string>/tmp/falcon-dev-error.log</string>
+   </dict>
+   </plist>
+   ```
+
+3. Load the agent:
+   ```bash
+   launchctl load ~/Library/LaunchAgents/com.falcon-dashboard.dev.plist
+   ```
+
+**Option 2: Production mode at startup**
+
+1. First, build the project:
+
+   ```bash
+   npm run build
+   npm install -g serve
+   ```
+
+2. Create a LaunchAgent plist file:
+
+   ```bash
+   nano ~/Library/LaunchAgents/com.falcon-dashboard.prod.plist
+   ```
+
+3. Paste this content:
+
+   ```xml
+   <?xml version="1.0" encoding="UTF-8"?>
+   <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+   <plist version="1.0">
+   <dict>
+       <key>Label</key>
+       <string>com.falcon-dashboard.prod</string>
+       <key>ProgramArguments</key>
+       <array>
+           <string>/bin/bash</string>
+           <string>/path/to/falcon-dashboard/start-serve.sh</string>
+       </array>
+       <key>RunAtLoad</key>
+       <true/>
+       <key>StandardOutPath</key>
+       <string>/tmp/falcon-prod.log</string>
+       <key>StandardErrorPath</key>
+       <string>/tmp/falcon-prod-error.log</string>
+   </dict>
+   </plist>
+   ```
+
+4. Load the agent:
+   ```bash
+   launchctl load ~/Library/LaunchAgents/com.falcon-dashboard.prod.plist
+   ```
+
+**To unload/stop the service:**
+
+```bash
+launchctl unload ~/Library/LaunchAgents/com.falcon-dashboard.dev.plist
+launchctl unload ~/Library/LaunchAgents/com.falcon-dashboard.prod.plist
+```
+
+**View logs:**
+
+```bash
+tail -f /tmp/falcon-dev.log
+tail -f /tmp/falcon-prod.log
+```
+
+---
+
 **Key files / components**
 
 - [public/index.html](public/index.html): page title and favicon.
